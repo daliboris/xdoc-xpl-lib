@@ -28,7 +28,7 @@
 	<p:option name="output-file-stem" select="'README'" as="xs:string"  />
 	<p:option name="documentation-format" select="('markdown', 'html')" as="xs:string*" values="('html', 'markdown')" />
 	
-	<p:declare-step type="xpan:create-analysis">
+	<p:declare-step type="xpan:create-analysis" visibility="public">
 		
 		<p:documentation>
 			<xhtml:section xml:lang="en">
@@ -68,7 +68,7 @@
 		
 	</p:declare-step>
 	
-	<p:declare-step type="xpan:create-report">
+	<p:declare-step type="xpan:create-report" visibility="public">
 		
 		<p:documentation>
 			<xhtml:section xml:lang="en">
@@ -109,31 +109,65 @@
 		
 	</p:declare-step>
 	
-	<!-- VARIABLES -->
-	<p:variable name="debug" select="$debug-path || '' ne ''" />
-	<p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
-	
-	<!-- PIPELINE STEPS -->
-	<xpan:create-analysis input-directory="{$input-directory}" debug-path="{$debug-path}" base-uri="{$base-uri}" />
-	<p:store href="{$output-directory}/{$output-file-stem}.xml" serialization="map{'indent' : true()}" message="Storing analysis to {$output-directory}/{$output-file-stem}.xml" name="analysis" />
-	
-	<p:for-each name="loop">
-		<p:with-input select="$documentation-format"/>
-		<p:output port="result-uri" primary="true" />
-		<p:variable name="format" select="." />
-		<p:variable name="extension" select="if($format = 'html') then '.html' else '.md'" />
-		<xpan:create-report format="{$format}" debug-path="{$debug-path}" base-uri="{$base-uri}">
-			<p:with-input port="source" pipe="result@analysis" />
-		</xpan:create-report>
-		<p:store href="{$output-directory}/{$output-file-stem}{$extension}" serialization="map{'indent' : true()}" message="Storing documentation to {$output-directory}/{$output-file-stem}{$extension}" />
+	<p:declare-step type="xpan:analyze" visibility="public">
+		<p:documentation>
+		<xhtml:section xml:lang="en">
+			<xhtml:h1>Analyze</xhtml:h1>
+			<xhtml:p>Analyzes XProc files in the libraries and pipeplines and saves report files.</xhtml:p>
+		</xhtml:section>
+		<xhtml:section xml:lang="cs">
+			<xhtml:h1>Analýza</xhtml:h1>
+			<xhtml:p>Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.</xhtml:p>
+		</xhtml:section>
+		</p:documentation>
+		
+		<!-- OUTPUT PORTS -->
+		<p:output port="result" serialization="map{'indent' : true()}" />
+		
+		<!-- OPTIONS -->
+		<p:option name="debug-path" select="()" as="xs:string?" />
+		<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+		
+		<p:option name="input-directory" select="'.'" as="xs:string" />
+		<p:option name="output-directory" select="'../report'" as="xs:string" />
+		<p:option name="output-file-stem" select="'README'" as="xs:string"  />
+		<p:option name="documentation-format" select="('markdown', 'html')" as="xs:string*" values="('html', 'markdown')" />
+		
+		<!-- VARIABLES -->
+		<p:variable name="debug" select="$debug-path || '' ne ''" />
+		<p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+		
+		<!-- PIPELINE STEPS -->
+		<xpan:create-analysis input-directory="{$input-directory}" debug-path="{$debug-path}" base-uri="{$base-uri}" />
+		<p:store href="{$output-directory}/{$output-file-stem}.xml" serialization="map{'indent' : true()}" message="Storing analysis to {$output-directory}/{$output-file-stem}.xml" name="analysis" />
+		
+		<p:for-each name="loop">
+			<p:with-input select="$documentation-format"/>
+			<p:output port="result-uri" primary="true" />
+			<p:variable name="format" select="." />
+			<p:variable name="extension" select="if($format = 'html') then '.html' else '.md'" />
+			<xpan:create-report format="{$format}" debug-path="{$debug-path}" base-uri="{$base-uri}">
+				<p:with-input port="source" pipe="result@analysis" />
+			</xpan:create-report>
+			<p:store href="{$output-directory}/{$output-file-stem}{$extension}" serialization="map{'indent' : true()}" message="Storing documentation to {$output-directory}/{$output-file-stem}{$extension}" />
+			<p:identity>
+				<p:with-input pipe="result-uri" />
+			</p:identity>
+		</p:for-each>
+		
 		<p:identity>
-			<p:with-input pipe="result-uri" />
+			<p:with-input pipe="result-uri@analysis result-uri@loop" />
 		</p:identity>
-	</p:for-each>
+		<p:wrap-sequence wrapper="c:result" />
+		
+	</p:declare-step>
 	
-	<p:identity>
-		<p:with-input pipe="result-uri@analysis result-uri@loop" />
-	</p:identity>
-	<p:wrap-sequence wrapper="c:result" />
+	<xpan:analyze input-directory="{$input-directory}" 
+		output-file-stem="{$output-file-stem}"
+		output-directory="{$output-directory}"
+		debug-path="{$debug-path}" base-uri="{$base-uri}">
+		<p:with-option name="documentation-format" select="('markdown', 'html')" />
+	</xpan:analyze>
+
 	
 </p:declare-step>
