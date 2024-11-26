@@ -36,35 +36,19 @@
 | --- | --- | ---| 
 | output | result | false |
 
-### Steps  (2 + 7)
+### Steps  (3 + 1)
       
-#### Documentation (148)
-    
-##### XProc files Analyzer
-Analyzes XProc files in the libraries and pipeplines.
-##### Analyzátor souborů XProc
-Analyzuje soubory XProc v knihovnách a kanálech.
 
 
 | position | step | name | parameter | value | 
 | --- | --- | --- | --- | --- | 
-| 1 | p:variable | debug |   |   | 
-|   |   |   | select | $debug-path \|\| '' ne '' | 
-| 2 | p:variable | debug-path-uri |   |   | 
-|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
-| 3 | xpan:create-analysis |  |   |   | 
+| 1 | xpan:analyze |  |   |   | 
 |   |   |   | base-uri | {$base-uri} | 
 |   |   |   | debug-path | {$debug-path} | 
+|   |   |   | documentation-format | ('markdown', 'html') | 
 |   |   |   | input-directory | {$input-directory} | 
-| 4 | p:store | analysis |   |   | 
-|   |   |   | href | {$output-directory}/{$output-file-stem}.xml | 
-|   |   |   | serialization | map{'indent' : true()} | 
-| 5 | p:for-each |  |   |   | 
-|   |   |   | select | $documentation-format | 
-| 6 | p:identity |  |   |   | 
-|   |   |   | pipe | result-uri@analysis result-uri@loop | 
-| 7 | p:wrap-sequence |  |   |   | 
-|   |   |   | wrapper | c:result | 
+|   |   |   | output-directory | {$output-directory} | 
+|   |   |   | output-file-stem | {$output-file-stem} | 
 
 #### **xpan:create-analysis**
 #### Documentation (172)
@@ -145,6 +129,61 @@
 | position | step | name | parameter | value | 
 | --- | --- | --- | --- | --- | 
 | 1 | p:choose |  |   |   | 
+
+
+#### **xpan:analyze**
+#### Documentation (166)
+    
+##### Analyze
+Analyzes XProc files in the libraries and pipeplines and saves report files.
+##### Analýza
+Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.
+#### Options (6)
+      
+| name | properties |
+| --- | --- |
+| debug-path | name = debug-path \| select = () \| as = xs:string? |
+| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| input-directory | name = input-directory \| select = '.' \| as = xs:string |
+| output-directory | name = output-directory \| select = '../report' \| as = xs:string |
+| output-file-stem | name = output-file-stem \| select = 'README' \| as = xs:string |
+| documentation-format | name = documentation-format \| select = ('markdown', 'html') \| as = xs:string* \| values = ('html', 'markdown') |
+
+#### Ports (1)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| output | result | false |
+
+### Steps  (0 + 7)
+      
+#### Documentation (166)
+    
+##### Analyze
+Analyzes XProc files in the libraries and pipeplines and saves report files.
+##### Analýza
+Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:variable | debug |   |   | 
+|   |   |   | select | $debug-path \|\| '' ne '' | 
+| 2 | p:variable | debug-path-uri |   |   | 
+|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
+| 3 | xpan:create-analysis |  |   |   | 
+|   |   |   | base-uri | {$base-uri} | 
+|   |   |   | debug-path | {$debug-path} | 
+|   |   |   | input-directory | {$input-directory} | 
+| 4 | p:store | analysis |   |   | 
+|   |   |   | href | {$output-directory}/{$output-file-stem}.xml | 
+|   |   |   | serialization | map{'indent' : true()} | 
+| 5 | p:for-each |  |   |   | 
+|   |   |   | select | $documentation-format | 
+| 6 | p:identity |  |   |   | 
+|   |   |   | pipe | result-uri@analysis result-uri@loop | 
+| 7 | p:wrap-sequence |  |   |   | 
+|   |   |   | wrapper | c:result | 
 
 
 

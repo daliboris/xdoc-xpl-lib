@@ -223,26 +223,9 @@
                   </div>
                   <details class="body">
                      <summary>
-                        <strong>Steps</strong> (2 + 7)</summary>
-                     <details class="documentation">
-                        <summary>
-                           <strong>Documentation</strong> (148)          
-        </summary>
-                        <section xml:lang="en"
-                                 xmlns="http://www.w3.org/1999/xhtml"
-                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
-                           <h1>XProc files Analyzer</h1>
-                           <p>Analyzes XProc files in the libraries and pipeplines.</p>
-                        </section>
-                        <section xml:lang="cs"
-                                 xmlns="http://www.w3.org/1999/xhtml"
-                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
-                           <h1>Analyzátor souborů XProc</h1>
-                           <p>Analyzuje soubory XProc v knihovnách a kanálech.</p>
-                        </section>
-                     </details>
+                        <strong>Steps</strong> (3 + 1)</summary>
                      <details class="step"
-                              id="d13e58">
+                              id="d13e40">
                         <summary>
                            <strong>xpan:create-analysis</strong>
                         </summary>
@@ -407,7 +390,7 @@
                         </details>
                      </details>
                      <details class="step"
-                              id="d13e125">
+                              id="d13e107">
                         <summary>
                            <strong>xpan:create-report</strong>
                         </summary>
@@ -524,6 +507,232 @@
                            </table>
                         </details>
                      </details>
+                     <details class="step"
+                              id="d13e163">
+                        <summary>
+                           <strong>xpan:analyze</strong>
+                        </summary>
+                        <div class="prolog">
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (166)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h1>Analyze</h1>
+                                 <p>Analyzes XProc files in the libraries and pipeplines and saves report files.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h1>Analýza</h1>
+                                 <p>Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.</p>
+                              </section>
+                           </details>
+                           <details class="options">
+                              <summary>
+                                 <strong>Options</strong>  (6)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>name</th>
+                                       <th>properties</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>debug-path</td>
+                                    <td>name = debug-path | select = () | as = xs:string?</td>
+                                 </tr>
+                                 <tr>
+                                    <td>base-uri</td>
+                                    <td>name = base-uri | as = xs:anyURI | select = static-base-uri()</td>
+                                 </tr>
+                                 <tr>
+                                    <td>input-directory</td>
+                                    <td>name = input-directory | select = '.' | as = xs:string</td>
+                                 </tr>
+                                 <tr>
+                                    <td>output-directory</td>
+                                    <td>name = output-directory | select = '../report' | as = xs:string</td>
+                                 </tr>
+                                 <tr>
+                                    <td>output-file-stem</td>
+                                    <td>name = output-file-stem | select = 'README' | as = xs:string</td>
+                                 </tr>
+                                 <tr>
+                                    <td>documentation-format</td>
+                                    <td>name = documentation-format | select = ('markdown', 'html') | as = xs:string* | values = ('html', 'markdown')</td>
+                                 </tr>
+                              </table>
+                           </details>
+                           <details class="ports">
+                              <summary>
+                                 <strong>Ports</strong> (1)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>direction</th>
+                                       <th>value</th>
+                                       <th>primary</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>output</td>
+                                    <td>result</td>
+                                    <td>false</td>
+                                 </tr>
+                              </table>
+                           </details>
+                        </div>
+                        <details class="body">
+                           <summary>
+                              <strong>Steps</strong> (0 + 7)</summary>
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (166)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h1>Analyze</h1>
+                                 <p>Analyzes XProc files in the libraries and pipeplines and saves report files.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h1>Analýza</h1>
+                                 <p>Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.</p>
+                              </section>
+                           </details>
+                           <table class="steps">
+                              <thead>
+                                 <tr>
+                                    <th>position</th>
+                                    <th>step</th>
+                                    <th>name</th>
+                                    <th>parameter</th>
+                                    <th>value</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr class="call">
+                                    <td>1</td>
+                                    <td class="step">p:variable</td>
+                                    <td>debug</td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>select</td>
+                                    <td>$debug-path || '' ne ''</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>2</td>
+                                    <td class="step">p:variable</td>
+                                    <td>debug-path-uri</td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>select</td>
+                                    <td>resolve-uri($debug-path, $base-uri)</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>3</td>
+                                    <td class="step">xpan:create-analysis</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>base-uri</td>
+                                    <td>{$base-uri}</td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>debug-path</td>
+                                    <td>{$debug-path}</td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>input-directory</td>
+                                    <td>{$input-directory}</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>4</td>
+                                    <td class="step">p:store</td>
+                                    <td>analysis</td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>href</td>
+                                    <td>{$output-directory}/{$output-file-stem}.xml</td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>serialization</td>
+                                    <td>map{'indent' : true()}</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>5</td>
+                                    <td class="step">p:for-each</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>select</td>
+                                    <td>$documentation-format</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>6</td>
+                                    <td class="step">p:identity</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>pipe</td>
+                                    <td>result-uri@analysis result-uri@loop</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>7</td>
+                                    <td class="step">p:wrap-sequence</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>wrapper</td>
+                                    <td>c:result</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </details>
+                     </details>
                      <table class="steps">
                         <thead>
                            <tr>
@@ -537,33 +746,7 @@
                         <tbody>
                            <tr class="call">
                               <td>1</td>
-                              <td class="step">p:variable</td>
-                              <td>debug</td>
-                              <td colspan="2">
-                              </td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>select</td>
-                              <td>$debug-path || '' ne ''</td>
-                           </tr>
-                           <tr class="call">
-                              <td>2</td>
-                              <td class="step">p:variable</td>
-                              <td>debug-path-uri</td>
-                              <td colspan="2">
-                              </td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>select</td>
-                              <td>resolve-uri($debug-path, $base-uri)</td>
-                           </tr>
-                           <tr class="call">
-                              <td>3</td>
-                              <td class="step">xpan:create-analysis</td>
+                              <td class="step">xpan:analyze</td>
                               <td>
                               </td>
                               <td colspan="2">
@@ -584,69 +767,26 @@
                            <tr class="parameter">
                               <td colspan="3">
                               </td>
+                              <td>documentation-format</td>
+                              <td>('markdown', 'html')</td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
                               <td>input-directory</td>
                               <td>{$input-directory}</td>
                            </tr>
-                           <tr class="call">
-                              <td>4</td>
-                              <td class="step">p:store</td>
-                              <td>analysis</td>
-                              <td colspan="2">
+                           <tr class="parameter">
+                              <td colspan="3">
                               </td>
+                              <td>output-directory</td>
+                              <td>{$output-directory}</td>
                            </tr>
                            <tr class="parameter">
                               <td colspan="3">
                               </td>
-                              <td>href</td>
-                              <td>{$output-directory}/{$output-file-stem}.xml</td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>serialization</td>
-                              <td>map{'indent' : true()}</td>
-                           </tr>
-                           <tr class="call">
-                              <td>5</td>
-                              <td class="step">p:for-each</td>
-                              <td>
-                              </td>
-                              <td colspan="2">
-                              </td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>select</td>
-                              <td>$documentation-format</td>
-                           </tr>
-                           <tr class="call">
-                              <td>6</td>
-                              <td class="step">p:identity</td>
-                              <td>
-                              </td>
-                              <td colspan="2">
-                              </td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>pipe</td>
-                              <td>result-uri@analysis result-uri@loop</td>
-                           </tr>
-                           <tr class="call">
-                              <td>7</td>
-                              <td class="step">p:wrap-sequence</td>
-                              <td>
-                              </td>
-                              <td colspan="2">
-                              </td>
-                           </tr>
-                           <tr class="parameter">
-                              <td colspan="3">
-                              </td>
-                              <td>wrapper</td>
-                              <td>c:result</td>
+                              <td>output-file-stem</td>
+                              <td>{$output-file-stem}</td>
                            </tr>
                         </tbody>
                      </table>
@@ -660,10 +800,13 @@
                <li>
                   <a href="#d13e3">default</a> (xproc-analyzer-3.0.xpl)</li>
                <li>
-                  <a href="#d13e58">xpan:create-analysis</a>
+                  <a href="#d13e163">xpan:analyze</a>
                </li>
                <li>
-                  <a href="#d13e125">xpan:create-report</a>
+                  <a href="#d13e40">xpan:create-analysis</a>
+               </li>
+               <li>
+                  <a href="#d13e107">xpan:create-report</a>
                </li>
             </ol>
          </nav>
