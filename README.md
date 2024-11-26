@@ -17,7 +17,7 @@ Analysis can be transformed to the HTML or Markdown document.
   - `report-format`: format of the generated documentation, can be `html` or `markdown`
 - call main step from the [xproc-analyzer-3.0.xpl](src/xproc/xproc-analyzer-3.0.xpl) pipeline
 
-For example following code analyzes XProc files stored in the `xproc` directory and stores generated report in HTML in Markdown in the current directory; file names start with `README`:
+For example following code analyzes XProc files stored in the `xproc` directory and stores generated HTML and Markdown report in the current directory; file names start with `README`:
 
 ```xml
 <p:import href="../xproc/xproc-analyzer-3.0.xpl" />
