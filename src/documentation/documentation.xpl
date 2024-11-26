@@ -9,8 +9,8 @@
 	
 	<p:documentation>
 		<xhtml:section>
-			<xhtml:h2></xhtml:h2>
-			<xhtml:p></xhtml:p>
+			<xhtml:h2>Genrate documentation</xhtml:h2>
+			<xhtml:p>Generates documentation (README) files for XPRoc files stored in main XProc directory.</xhtml:p>
 		</xhtml:section>
 	</p:documentation>
    
