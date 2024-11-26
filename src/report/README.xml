@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xpan:report xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+   <analysis file-name="xproc-analyzer-3.0.xpl"
+             path="file:///V:/Projekty/Github/Daliboris/XProc/xdoc-xpl-lib/src/xproc/xproc-analyzer-3.0.xpl"
+             xmlns="https://www.daliboris.cz/ns/xproc/analysis"
+             xmlns:xhtml="http://www.w3.org/1999/xhtml">
+      <step>
+         <prolog>
+            <documentation length="148">
+               <xhtml:section xml:lang="en">
+                  <xhtml:h1>XProc files Analyzer</xhtml:h1>
+                  <xhtml:p>Analyzes XProc files in the libraries and pipeplines.</xhtml:p>
+               </xhtml:section>
+               <xhtml:section xml:lang="cs">
+                  <xhtml:h1>Analyzátor souborů XProc</xhtml:h1>
+                  <xhtml:p>Analyzuje soubory XProc v knihovnách a kanálech.</xhtml:p>
+               </xhtml:section>
+            </documentation>
+            <namespaces>
+               <namespace prefix="c"
+                          value="http://www.w3.org/ns/xproc-step"/>
+               <namespace prefix="p"
+                          value="http://www.w3.org/ns/xproc"/>
+               <namespace prefix="xhtml"
+                          value="http://www.w3.org/1999/xhtml"/>
+               <namespace prefix="xpan"
+                          value="https://www.daliboris.cz/ns/xproc/analysis"/>
+               <namespace prefix="xs"
+                          value="http://www.w3.org/2001/XMLSchema"/>
+               <namespace prefix="xml"
+                          value="http://www.w3.org/XML/1998/namespace"/>
+            </namespaces>
+            <options>
+               <option name="debug-path"
+                       select="()"
+                       as="xs:string?"/>
+               <option name="base-uri"
+                       as="xs:anyURI"
+                       select="static-base-uri()"/>
+               <option name="input-directory"
+                       select="'.'"
+                       as="xs:string"/>
+               <option name="output-directory"
+                       select="'../report'"
+                       as="xs:string"/>
+               <option name="output-file-stem"
+                       select="'README'"
+                       as="xs:string"/>
+               <option name="documentation-format"
+                       select="('markdown', 'html')"
+                       as="xs:string*"
+                       values="('html', 'markdown')"/>
+            </options>
+            <ports>
+               <output port="result"/>
+            </ports>
+         </prolog>
+         <body>
+            <documentation length="148">
+               <xhtml:section xml:lang="en">
+                  <xhtml:h1>XProc files Analyzer</xhtml:h1>
+                  <xhtml:p>Analyzes XProc files in the libraries and pipeplines.</xhtml:p>
+               </xhtml:section>
+               <xhtml:section xml:lang="cs">
+                  <xhtml:h1>Analyzátor souborů XProc</xhtml:h1>
+                  <xhtml:p>Analyzuje soubory XProc v knihovnách a kanálech.</xhtml:p>
+               </xhtml:section>
+            </documentation>
+            <step type="xpan:create-analysis">
+               <prolog>
+                  <documentation length="172">
+                     <xhtml:section xml:lang="en">
+                        <xhtml:h2>Create analysis</xhtml:h2>
+                        <xhtml:p>Analyzes XProc files in the directory and creates report in XML format.</xhtml:p>
+                     </xhtml:section>
+                     <xhtml:section xml:lang="cs">
+                        <xhtml:h2>Vytvoření analýzy</xhtml:h2>
+                        <xhtml:p>Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.</xhtml:p>
+                     </xhtml:section>
+                  </documentation>
+                  <namespaces>
+                     <namespace prefix="c"
+                                value="http://www.w3.org/ns/xproc-step"/>
+                     <namespace prefix="p"
+                                value="http://www.w3.org/ns/xproc"/>
+                     <namespace prefix="xhtml"
+                                value="http://www.w3.org/1999/xhtml"/>
+                     <namespace prefix="xpan"
+                                value="https://www.daliboris.cz/ns/xproc/analysis"/>
+                     <namespace prefix="xs"
+                                value="http://www.w3.org/2001/XMLSchema"/>
+                     <namespace prefix="xml"
+                                value="http://www.w3.org/XML/1998/namespace"/>
+                  </namespaces>
+                  <options>
+                     <option name="debug-path"
+                             select="()"
+                             as="xs:string?"/>
+                     <option name="base-uri"
+                             as="xs:anyURI"
+                             select="static-base-uri()"/>
+                     <option name="input-directory"
+                             select="'.'"
+                             as="xs:string"/>
+                  </options>
+                  <ports>
+                     <output port="result"
+                             primary="true"/>
+                  </ports>
+               </prolog>
+               <body>
+                  <documentation length="172">
+                     <xhtml:section xml:lang="en">
+                        <xhtml:h2>Create analysis</xhtml:h2>
+                        <xhtml:p>Analyzes XProc files in the directory and creates report in XML format.</xhtml:p>
+                     </xhtml:section>
+                     <xhtml:section xml:lang="cs">
+                        <xhtml:h2>Vytvoření analýzy</xhtml:h2>
+                        <xhtml:p>Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.</xhtml:p>
+                     </xhtml:section>
+                  </documentation>
+                  <call step="p:directory-list">
+                     <parameter name="path"
+                                value="{$input-directory}"/>
+                     <parameter name="include-filter"
+                                value="^.*\.xpl"/>
+                  </call>
+                  <call step="p:for-each">
+                     <port name="anonymous">
+                        <parameter name="select"
+                                   value="//c:file"/>
+                     </port>
+                  </call>
+                  <call step="p:wrap-sequence">
+                     <parameter name="wrapper"
+                                value="xpan:report"/>
+                  </call>
+                  <call step="p:namespace-delete">
+                     <parameter name="prefixes"
+                                value="p c xs"/>
+                  </call>
+               </body>
+            </step>
+            <step type="xpan:create-report">
+               <prolog>
+                  <documentation length="173">
+                     <xhtml:section xml:lang="en">
+                        <xhtml:h2>Create report</xhtml:h2>
+                        <xhtml:p>Converts analysis of XProc files to HTML or Markdown format.</xhtml:p>
+                     </xhtml:section>
+                     <xhtml:section xml:lang="cs">
+                        <xhtml:h2>Vytvoření souhrnu</xhtml:h2>
+                        <xhtml:p>Konvertuje analýzu souborů XProc a vytvoří souhrn ve formátu HTML nebo Markdown.</xhtml:p>
+                     </xhtml:section>
+                  </documentation>
+                  <namespaces>
+                     <namespace prefix="c"
+                                value="http://www.w3.org/ns/xproc-step"/>
+                     <namespace prefix="p"
+                                value="http://www.w3.org/ns/xproc"/>
+                     <namespace prefix="xhtml"
+                                value="http://www.w3.org/1999/xhtml"/>
+                     <namespace prefix="xpan"
+                                value="https://www.daliboris.cz/ns/xproc/analysis"/>
+                     <namespace prefix="xs"
+                                value="http://www.w3.org/2001/XMLSchema"/>
+                     <namespace prefix="xml"
+                                value="http://www.w3.org/XML/1998/namespace"/>
+                  </namespaces>
+                  <options>
+                     <option name="debug-path"
+                             select="()"
+                             as="xs:string?"/>
+                     <option name="base-uri"
+                             as="xs:anyURI"
+                             select="static-base-uri()"/>
+                     <option name="format"
+                             select="'html'"
+                             as="xs:string"
+                             values="('html', 'markdown')"/>
+                  </options>
+                  <ports>
+                     <input port="source"
+                            primary="true"/>
+                     <output port="result"
+                             primary="true"/>
+                  </ports>
+               </prolog>
+               <body>
+                  <documentation length="173">
+                     <xhtml:section xml:lang="en">
+                        <xhtml:h2>Create report</xhtml:h2>
+                        <xhtml:p>Converts analysis of XProc files to HTML or Markdown format.</xhtml:p>
+                     </xhtml:section>
+                     <xhtml:section xml:lang="cs">
+                        <xhtml:h2>Vytvoření souhrnu</xhtml:h2>
+                        <xhtml:p>Konvertuje analýzu souborů XProc a vytvoří souhrn ve formátu HTML nebo Markdown.</xhtml:p>
+                     </xhtml:section>
+                  </documentation>
+                  <call step="p:choose"
+                        length="2"/>
+               </body>
+            </step>
+            <call step="p:variable"
+                  name="debug">
+               <parameter name="select"
+                          value="$debug-path || '' ne ''"/>
+            </call>
+            <call step="p:variable"
+                  name="debug-path-uri">
+               <parameter name="select"
+                          value="resolve-uri($debug-path, $base-uri)"/>
+            </call>
+            <call step="xpan:create-analysis">
+               <parameter name="input-directory"
+                          value="{$input-directory}"/>
+               <parameter name="debug-path"
+                          value="{$debug-path}"/>
+               <parameter name="base-uri"
+                          value="{$base-uri}"/>
+            </call>
+            <call step="p:store"
+                  name="analysis">
+               <parameter name="href"
+                          value="{$output-directory}/{$output-file-stem}.xml"/>
+               <parameter name="serialization"
+                          value="map{'indent' : true()}"/>
+            </call>
+            <call step="p:for-each">
+               <port name="anonymous">
+                  <parameter name="select"
+                             value="$documentation-format"/>
+               </port>
+            </call>
+            <call step="p:identity">
+               <port name="anonymous">
+                  <parameter name="pipe"
+                             value="result-uri@analysis result-uri@loop"/>
+               </port>
+            </call>
+            <call step="p:wrap-sequence">
+               <parameter name="wrapper"
+                          value="c:result"/>
+            </call>
+         </body>
+      </step>
+   </analysis>
+</xpan:report>

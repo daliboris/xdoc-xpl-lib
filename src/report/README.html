@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html xmlns="https://www.daliboris.cz/ns/xproc/analysis">
+   <head>
+      <meta http-equiv="Content-Type" content="application/xml; charset=UTF-8">
+      <title>XProc Analysis Report</title>
+      <style>
+      @media print {
+        details {
+        border: 1px solid white;
+        }
+        details[open] summary {
+        border-bottom: 1px solid white;
+        }
+        .container {
+        display: block;
+        width: 100%;
+        }
+        nav.overview {
+        display: none;
+        }
+      }
+      details {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 0.5em 0.5em 0;
+      }
+      
+      summary {
+      margin: -0.5em -0.5em 0;
+      padding: 0.5em;
+      }
+      
+      details[open] {
+      padding: 0.5em;
+      }
+      
+      details[open] summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 0.5em;
+      }
+      table {
+      border-collapse: collapse;
+      }
+      tr.call {
+      border-top: 1pt solid black;
+      }
+      tr.call td.step {
+      font-weight: bold;
+      }
+      tr.disabled {
+      color: silver;
+      }
+      tr.parameter {
+      border-bottom: 1pt solid silver;
+      }
+      .container {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 15px 10px;
+      justify-content: stretch;
+      }
+      .details > .heading {
+      /*
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 15px;
+      justify-content: stretch;
+      */
+      display: flex;
+      justify-content: space-between;
+      }
+      .heading > fieldset {
+      place-self: center stretch;
+      }</style>
+   </head>
+   <body>
+      <div class="container">
+         <main class="details">
+            <div class="heading">
+               <h2>Steps details</h2>
+               <fieldset>
+                  <legend>Expand</legend>
+                  <input type="checkbox"
+                         id="expand-files"
+                         name="files">
+                  </input>
+                  <label for="expand-files">Files</label>
+                  <input type="checkbox"
+                         id="expand-documentation"
+                         name="documentation">
+                  </input>
+                  <label for="expand-documentation">Documentation</label>
+                  <input type="checkbox"
+                         id="expand-steps"
+                         name="steps">
+                  </input>
+                  <label for="expand-steps">Steps</label>
+                  <input type="checkbox"
+                         id="expand-all"
+                         name="all">
+                  </input>
+                  <label for="expand-steps">All</label>
+               </fieldset>
+            </div>
+            <details class="file">
+               <summary>
+                  <strong>xproc-analyzer-3.0.xpl</strong>
+               </summary>
+               <details class="step"
+                        id="d13e3"
+                        open>
+                  <summary>
+                     <strong>default</strong>
+                  </summary>
+                  <div class="prolog">
+                     <details class="documentation">
+                        <summary>
+                           <strong>Documentation</strong> (148)          
+        </summary>
+                        <section xml:lang="en"
+                                 xmlns="http://www.w3.org/1999/xhtml"
+                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                           <h1>XProc files Analyzer</h1>
+                           <p>Analyzes XProc files in the libraries and pipeplines.</p>
+                        </section>
+                        <section xml:lang="cs"
+                                 xmlns="http://www.w3.org/1999/xhtml"
+                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                           <h1>Analyzátor souborů XProc</h1>
+                           <p>Analyzuje soubory XProc v knihovnách a kanálech.</p>
+                        </section>
+                     </details>
+                     <details class="namespaces">
+                        <summary>
+                           <strong>Namespaces</strong>  (6)</summary>
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>prefix</th>
+                                 <th>string</th>
+                              </tr>
+                           </thead>
+                           <tr>
+                              <td>c</td>
+                              <td>http://www.w3.org/ns/xproc-step</td>
+                           </tr>
+                           <tr>
+                              <td>p</td>
+                              <td>http://www.w3.org/ns/xproc</td>
+                           </tr>
+                           <tr>
+                              <td>xhtml</td>
+                              <td>http://www.w3.org/1999/xhtml</td>
+                           </tr>
+                           <tr>
+                              <td>xpan</td>
+                              <td>https://www.daliboris.cz/ns/xproc/analysis</td>
+                           </tr>
+                           <tr>
+                              <td>xs</td>
+                              <td>http://www.w3.org/2001/XMLSchema</td>
+                           </tr>
+                           <tr>
+                              <td>xml</td>
+                              <td>http://www.w3.org/XML/1998/namespace</td>
+                           </tr>
+                        </table>
+                     </details>
+                     <details class="options">
+                        <summary>
+                           <strong>Options</strong>  (6)</summary>
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>name</th>
+                                 <th>properties</th>
+                              </tr>
+                           </thead>
+                           <tr>
+                              <td>debug-path</td>
+                              <td>name = debug-path | select = () | as = xs:string?</td>
+                           </tr>
+                           <tr>
+                              <td>base-uri</td>
+                              <td>name = base-uri | as = xs:anyURI | select = static-base-uri()</td>
+                           </tr>
+                           <tr>
+                              <td>input-directory</td>
+                              <td>name = input-directory | select = '.' | as = xs:string</td>
+                           </tr>
+                           <tr>
+                              <td>output-directory</td>
+                              <td>name = output-directory | select = '../report' | as = xs:string</td>
+                           </tr>
+                           <tr>
+                              <td>output-file-stem</td>
+                              <td>name = output-file-stem | select = 'README' | as = xs:string</td>
+                           </tr>
+                           <tr>
+                              <td>documentation-format</td>
+                              <td>name = documentation-format | select = ('markdown', 'html') | as = xs:string* | values = ('html', 'markdown')</td>
+                           </tr>
+                        </table>
+                     </details>
+                     <details class="ports">
+                        <summary>
+                           <strong>Ports</strong> (1)</summary>
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>direction</th>
+                                 <th>value</th>
+                                 <th>primary</th>
+                              </tr>
+                           </thead>
+                           <tr>
+                              <td>output</td>
+                              <td>result</td>
+                              <td>false</td>
+                           </tr>
+                        </table>
+                     </details>
+                  </div>
+                  <details class="body">
+                     <summary>
+                        <strong>Steps</strong> (2 + 7)</summary>
+                     <details class="documentation">
+                        <summary>
+                           <strong>Documentation</strong> (148)          
+        </summary>
+                        <section xml:lang="en"
+                                 xmlns="http://www.w3.org/1999/xhtml"
+                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                           <h1>XProc files Analyzer</h1>
+                           <p>Analyzes XProc files in the libraries and pipeplines.</p>
+                        </section>
+                        <section xml:lang="cs"
+                                 xmlns="http://www.w3.org/1999/xhtml"
+                                 xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                           <h1>Analyzátor souborů XProc</h1>
+                           <p>Analyzuje soubory XProc v knihovnách a kanálech.</p>
+                        </section>
+                     </details>
+                     <details class="step"
+                              id="d13e58">
+                        <summary>
+                           <strong>xpan:create-analysis</strong>
+                        </summary>
+                        <div class="prolog">
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (172)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Create analysis</h2>
+                                 <p>Analyzes XProc files in the directory and creates report in XML format.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Vytvoření analýzy</h2>
+                                 <p>Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.</p>
+                              </section>
+                           </details>
+                           <details class="options">
+                              <summary>
+                                 <strong>Options</strong>  (3)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>name</th>
+                                       <th>properties</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>debug-path</td>
+                                    <td>name = debug-path | select = () | as = xs:string?</td>
+                                 </tr>
+                                 <tr>
+                                    <td>base-uri</td>
+                                    <td>name = base-uri | as = xs:anyURI | select = static-base-uri()</td>
+                                 </tr>
+                                 <tr>
+                                    <td>input-directory</td>
+                                    <td>name = input-directory | select = '.' | as = xs:string</td>
+                                 </tr>
+                              </table>
+                           </details>
+                           <details class="ports">
+                              <summary>
+                                 <strong>Ports</strong> (1)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>direction</th>
+                                       <th>value</th>
+                                       <th>primary</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>output</td>
+                                    <td>
+                                       <strong>result</strong>
+                                    </td>
+                                    <td>true</td>
+                                 </tr>
+                              </table>
+                           </details>
+                        </div>
+                        <details class="body">
+                           <summary>
+                              <strong>Steps</strong> (0 + 4)</summary>
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (172)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Create analysis</h2>
+                                 <p>Analyzes XProc files in the directory and creates report in XML format.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Vytvoření analýzy</h2>
+                                 <p>Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.</p>
+                              </section>
+                           </details>
+                           <table class="steps">
+                              <thead>
+                                 <tr>
+                                    <th>position</th>
+                                    <th>step</th>
+                                    <th>name</th>
+                                    <th>parameter</th>
+                                    <th>value</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr class="call">
+                                    <td>1</td>
+                                    <td class="step">p:directory-list</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>include-filter</td>
+                                    <td>^.*\.xpl</td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>path</td>
+                                    <td>{$input-directory}</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>2</td>
+                                    <td class="step">p:for-each</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>select</td>
+                                    <td>//c:file</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>3</td>
+                                    <td class="step">p:wrap-sequence</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>wrapper</td>
+                                    <td>xpan:report</td>
+                                 </tr>
+                                 <tr class="call">
+                                    <td>4</td>
+                                    <td class="step">p:namespace-delete</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                                 <tr class="parameter">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>prefixes</td>
+                                    <td>p c xs</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </details>
+                     </details>
+                     <details class="step"
+                              id="d13e125">
+                        <summary>
+                           <strong>xpan:create-report</strong>
+                        </summary>
+                        <div class="prolog">
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (173)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Create report</h2>
+                                 <p>Converts analysis of XProc files to HTML or Markdown format.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Vytvoření souhrnu</h2>
+                                 <p>Konvertuje analýzu souborů XProc a vytvoří souhrn ve formátu HTML nebo Markdown.</p>
+                              </section>
+                           </details>
+                           <details class="options">
+                              <summary>
+                                 <strong>Options</strong>  (3)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>name</th>
+                                       <th>properties</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>debug-path</td>
+                                    <td>name = debug-path | select = () | as = xs:string?</td>
+                                 </tr>
+                                 <tr>
+                                    <td>base-uri</td>
+                                    <td>name = base-uri | as = xs:anyURI | select = static-base-uri()</td>
+                                 </tr>
+                                 <tr>
+                                    <td>format</td>
+                                    <td>name = format | select = 'html' | as = xs:string | values = ('html', 'markdown')</td>
+                                 </tr>
+                              </table>
+                           </details>
+                           <details class="ports">
+                              <summary>
+                                 <strong>Ports</strong> (2)</summary>
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>direction</th>
+                                       <th>value</th>
+                                       <th>primary</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td>input</td>
+                                    <td>
+                                       <strong>source</strong>
+                                    </td>
+                                    <td>true</td>
+                                 </tr>
+                                 <tr>
+                                    <td>output</td>
+                                    <td>
+                                       <strong>result</strong>
+                                    </td>
+                                    <td>true</td>
+                                 </tr>
+                              </table>
+                           </details>
+                        </div>
+                        <details class="body">
+                           <summary>
+                              <strong>Steps</strong> (0 + 1)</summary>
+                           <details class="documentation">
+                              <summary>
+                                 <strong>Documentation</strong> (173)          
+        </summary>
+                              <section xml:lang="en"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Create report</h2>
+                                 <p>Converts analysis of XProc files to HTML or Markdown format.</p>
+                              </section>
+                              <section xml:lang="cs"
+                                       xmlns="http://www.w3.org/1999/xhtml"
+                                       xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
+                                 <h2>Vytvoření souhrnu</h2>
+                                 <p>Konvertuje analýzu souborů XProc a vytvoří souhrn ve formátu HTML nebo Markdown.</p>
+                              </section>
+                           </details>
+                           <table class="steps">
+                              <thead>
+                                 <tr>
+                                    <th>position</th>
+                                    <th>step</th>
+                                    <th>name</th>
+                                    <th>parameter</th>
+                                    <th>value</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr class="call">
+                                    <td>1</td>
+                                    <td class="step">p:choose</td>
+                                    <td>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </details>
+                     </details>
+                     <table class="steps">
+                        <thead>
+                           <tr>
+                              <th>position</th>
+                              <th>step</th>
+                              <th>name</th>
+                              <th>parameter</th>
+                              <th>value</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="call">
+                              <td>1</td>
+                              <td class="step">p:variable</td>
+                              <td>debug</td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>select</td>
+                              <td>$debug-path || '' ne ''</td>
+                           </tr>
+                           <tr class="call">
+                              <td>2</td>
+                              <td class="step">p:variable</td>
+                              <td>debug-path-uri</td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>select</td>
+                              <td>resolve-uri($debug-path, $base-uri)</td>
+                           </tr>
+                           <tr class="call">
+                              <td>3</td>
+                              <td class="step">xpan:create-analysis</td>
+                              <td>
+                              </td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>base-uri</td>
+                              <td>{$base-uri}</td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>debug-path</td>
+                              <td>{$debug-path}</td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>input-directory</td>
+                              <td>{$input-directory}</td>
+                           </tr>
+                           <tr class="call">
+                              <td>4</td>
+                              <td class="step">p:store</td>
+                              <td>analysis</td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>href</td>
+                              <td>{$output-directory}/{$output-file-stem}.xml</td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>serialization</td>
+                              <td>map{'indent' : true()}</td>
+                           </tr>
+                           <tr class="call">
+                              <td>5</td>
+                              <td class="step">p:for-each</td>
+                              <td>
+                              </td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>select</td>
+                              <td>$documentation-format</td>
+                           </tr>
+                           <tr class="call">
+                              <td>6</td>
+                              <td class="step">p:identity</td>
+                              <td>
+                              </td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>pipe</td>
+                              <td>result-uri@analysis result-uri@loop</td>
+                           </tr>
+                           <tr class="call">
+                              <td>7</td>
+                              <td class="step">p:wrap-sequence</td>
+                              <td>
+                              </td>
+                              <td colspan="2">
+                              </td>
+                           </tr>
+                           <tr class="parameter">
+                              <td colspan="3">
+                              </td>
+                              <td>wrapper</td>
+                              <td>c:result</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </details>
+               </details>
+            </details>
+         </main>
+         <nav class="overview">
+            <h2>List of steps</h2>
+            <ol>
+               <li>
+                  <a href="#d13e3">default</a> (xproc-analyzer-3.0.xpl)</li>
+               <li>
+                  <a href="#d13e58">xpan:create-analysis</a>
+               </li>
+               <li>
+                  <a href="#d13e125">xpan:create-report</a>
+               </li>
+            </ol>
+         </nav>
+      </div>
+      <script>
+      
+      
+            function collapseOrExpandItems(expandSelector, itemsSelector, mainExpand) {
+              const expand = document.querySelector(expandSelector);
+              const items = document.querySelectorAll(itemsSelector);
+              
+              expand.addEventListener("click", (e) => {
+              if(expand.checked && !mainExpand.checked) {
+                mainExpand.click();
+              }
+              items.forEach((item) => {
+                if(!expand.checked) 
+                  {item.removeAttribute('open')}
+                else
+                  {item.setAttribute('open', 'open')}
+              });
+            });
+            };
+            
+            const expandFiles = document.querySelector("#expand-files");
+            const expandAll = document.querySelector('#expand-all');
+            
+            const items = document.querySelectorAll("details");
+            expandAll.addEventListener("click", (e) => {
+              
+              items.forEach((item) => {
+                if(!expandAll.checked) 
+                  {item.removeAttribute('open')}
+                else
+                  {item.setAttribute('open', 'open')}
+              });
+            });
+            
+            collapseOrExpandItems("#expand-files", "details.file", expandFiles);
+            collapseOrExpandItems("#expand-steps", "details.body", expandFiles);
+            collapseOrExpandItems("#expand-documentation", "details.documentation", expandFiles);
+
+            
+            
+    </script>
+   </body>
+</html>
