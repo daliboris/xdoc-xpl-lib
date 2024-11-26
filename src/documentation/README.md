@@ -1,7 +1,6 @@
 # XProc Analysis Report
 
 ## xproc-analyzer-3.0.xpl
-#### **default**
 #### Documentation (148)
     
 ##### XProc files Analyzer
@@ -19,38 +18,16 @@
 | xs | http://www.w3.org/2001/XMLSchema |
 | xml | http://www.w3.org/XML/1998/namespace |
 
-#### Options (6)
+### Steps  (3 + 0)
       
-| name | properties |
-| --- | --- |
-| debug-path | name = debug-path \| select = () \| as = xs:string? |
-| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
-| input-directory | name = input-directory \| select = '.' \| as = xs:string |
-| output-directory | name = output-directory \| select = '../report' \| as = xs:string |
-| output-file-stem | name = output-file-stem \| select = 'README' \| as = xs:string |
-| documentation-format | name = documentation-format \| select = ('markdown', 'html') \| as = xs:string* \| values = ('html', 'markdown') |
-
-#### Ports (1)
+#### Documentation (148)
     
-| direction | value | primary |
-| --- | --- | ---| 
-| output | result | false |
+##### XProc files Analyzer
+Analyzes XProc files in the libraries and pipeplines.
+##### Analyzátor souborů XProc
+Analyzuje soubory XProc v knihovnách a kanálech.
 
-### Steps  (3 + 1)
-      
-
-
-| position | step | name | parameter | value | 
-| --- | --- | --- | --- | --- | 
-| 1 | xpan:analyze |  |   |   | 
-|   |   |   | base-uri | {$base-uri} | 
-|   |   |   | debug-path | {$debug-path} | 
-|   |   |   | documentation-format | ('markdown', 'html') | 
-|   |   |   | input-directory | {$input-directory} | 
-|   |   |   | output-directory | {$output-directory} | 
-|   |   |   | output-file-stem | {$output-file-stem} | 
-
-#### **xpan:create-analysis**
+#### **xpan:create-analysis**
 #### Documentation (172)
     
 ##### Create analysis
@@ -71,7 +48,7 @@
 | --- | --- | ---| 
 | output | **result** | true |
 
-### Steps  (0 + 4)
+### Steps  (0 + 5)
       
 #### Documentation (172)
     
@@ -83,14 +60,16 @@
 
 | position | step | name | parameter | value | 
 | --- | --- | --- | --- | --- | 
-| 1 | p:directory-list |  |   |   | 
+| 1 | p:variable | input-directory-uri |   |   | 
+|   |   |   | select | resolve-uri($input-directory, $base-uri) | 
+| 2 | p:directory-list |  |   |   | 
 |   |   |   | include-filter | ^.*\.xpl | 
-|   |   |   | path | {$input-directory} | 
-| 2 | p:for-each |  |   |   | 
+|   |   |   | path | {$input-directory-uri} | 
+| 3 | p:for-each |  |   |   | 
 |   |   |   | select | //c:file | 
-| 3 | p:wrap-sequence |  |   |   | 
+| 4 | p:wrap-sequence |  |   |   | 
 |   |   |   | wrapper | xpan:report | 
-| 4 | p:namespace-delete |  |   |   | 
+| 5 | p:namespace-delete |  |   |   | 
 |   |   |   | prefixes | p c xs | 
 
 
@@ -155,7 +134,7 @@
 | --- | --- | ---| 
 | output | result | false |
 
-### Steps  (0 + 7)
+### Steps  (0 + 10)
       
 #### Documentation (166)
     
@@ -171,18 +150,24 @@
 |   |   |   | select | $debug-path \|\| '' ne '' | 
 | 2 | p:variable | debug-path-uri |   |   | 
 |   |   |   | select | resolve-uri($debug-path, $base-uri) | 
-| 3 | xpan:create-analysis |  |   |   | 
+| 3 | p:variable | output-directory-uri |   |   | 
+|   |   |   | select | resolve-uri($output-directory, $base-uri) | 
+| 4 | p:variable | input-directory-uri |   |   | 
+|   |   |   | select | resolve-uri($input-directory, $base-uri) | 
+| 5 | p:variable | output-slash |   |   | 
+|   |   |   | select | if(ends-with($output-directory-uri, '/')) then '' else '/' | 
+| 6 | xpan:create-analysis |  |   |   | 
 |   |   |   | base-uri | {$base-uri} | 
 |   |   |   | debug-path | {$debug-path} | 
 |   |   |   | input-directory | {$input-directory} | 
-| 4 | p:store | analysis |   |   | 
-|   |   |   | href | {$output-directory}/{$output-file-stem}.xml | 
+| 7 | p:store | analysis |   |   | 
+|   |   |   | href | {$output-directory-uri}{$output-slash}{$output-file-stem}.xml | 
 |   |   |   | serialization | map{'indent' : true()} | 
-| 5 | p:for-each |  |   |   | 
+| 8 | p:for-each |  |   |   | 
 |   |   |   | select | $documentation-format | 
-| 6 | p:identity |  |   |   | 
+| 9 | p:identity |  |   |   | 
 |   |   |   | pipe | result-uri@analysis result-uri@loop | 
-| 7 | p:wrap-sequence |  |   |   | 
+| 10 | p:wrap-sequence |  |   |   | 
 |   |   |   | wrapper | c:result | 
 
 

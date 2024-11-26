@@ -4,7 +4,7 @@
              path="file:///V:/Projekty/Github/Daliboris/XProc/xdoc-xpl-lib/src/xproc/xproc-analyzer-3.0.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <step>
+      <library>
          <prolog>
             <documentation length="148">
                <xhtml:section xml:lang="en">
@@ -30,32 +30,18 @@
                <namespace prefix="xml"
                           value="http://www.w3.org/XML/1998/namespace"/>
             </namespaces>
-            <options>
-               <option name="debug-path"
-                       select="()"
-                       as="xs:string?"/>
-               <option name="base-uri"
-                       as="xs:anyURI"
-                       select="static-base-uri()"/>
-               <option name="input-directory"
-                       select="'.'"
-                       as="xs:string"/>
-               <option name="output-directory"
-                       select="'../report'"
-                       as="xs:string"/>
-               <option name="output-file-stem"
-                       select="'README'"
-                       as="xs:string"/>
-               <option name="documentation-format"
-                       select="('markdown', 'html')"
-                       as="xs:string*"
-                       values="('html', 'markdown')"/>
-            </options>
-            <ports>
-               <output port="result"/>
-            </ports>
          </prolog>
          <body>
+            <documentation length="148">
+               <xhtml:section xml:lang="en">
+                  <xhtml:h1>XProc files Analyzer</xhtml:h1>
+                  <xhtml:p>Analyzes XProc files in the libraries and pipeplines.</xhtml:p>
+               </xhtml:section>
+               <xhtml:section xml:lang="cs">
+                  <xhtml:h1>Analyzátor souborů XProc</xhtml:h1>
+                  <xhtml:p>Analyzuje soubory XProc v knihovnách a kanálech.</xhtml:p>
+               </xhtml:section>
+            </documentation>
             <step type="xpan:create-analysis">
                <prolog>
                   <documentation length="172">
@@ -109,9 +95,14 @@
                         <xhtml:p>Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.</xhtml:p>
                      </xhtml:section>
                   </documentation>
+                  <call step="p:variable"
+                        name="input-directory-uri">
+                     <parameter name="select"
+                                value="resolve-uri($input-directory, $base-uri)"/>
+                  </call>
                   <call step="p:directory-list">
                      <parameter name="path"
-                                value="{$input-directory}"/>
+                                value="{$input-directory-uri}"/>
                      <parameter name="include-filter"
                                 value="^.*\.xpl"/>
                   </call>
@@ -263,6 +254,21 @@
                      <parameter name="select"
                                 value="resolve-uri($debug-path, $base-uri)"/>
                   </call>
+                  <call step="p:variable"
+                        name="output-directory-uri">
+                     <parameter name="select"
+                                value="resolve-uri($output-directory, $base-uri)"/>
+                  </call>
+                  <call step="p:variable"
+                        name="input-directory-uri">
+                     <parameter name="select"
+                                value="resolve-uri($input-directory, $base-uri)"/>
+                  </call>
+                  <call step="p:variable"
+                        name="output-slash">
+                     <parameter name="select"
+                                value="if(ends-with($output-directory-uri, '/')) then '' else '/'"/>
+                  </call>
                   <call step="xpan:create-analysis">
                      <parameter name="input-directory"
                                 value="{$input-directory}"/>
@@ -274,7 +280,7 @@
                   <call step="p:store"
                         name="analysis">
                      <parameter name="href"
-                                value="{$output-directory}/{$output-file-stem}.xml"/>
+                                value="{$output-directory-uri}{$output-slash}{$output-file-stem}.xml"/>
                      <parameter name="serialization"
                                 value="map{'indent' : true()}"/>
                   </call>
@@ -296,21 +302,7 @@
                   </call>
                </body>
             </step>
-            <call step="xpan:analyze">
-               <parameter name="input-directory"
-                          value="{$input-directory}"/>
-               <parameter name="output-file-stem"
-                          value="{$output-file-stem}"/>
-               <parameter name="output-directory"
-                          value="{$output-directory}"/>
-               <parameter name="debug-path"
-                          value="{$debug-path}"/>
-               <parameter name="base-uri"
-                          value="{$base-uri}"/>
-               <parameter name="documentation-format"
-                          value="('markdown', 'html')"/>
-            </call>
          </body>
-      </step>
+      </library>
    </analysis>
 </xpan:report>
