@@ -54,6 +54,8 @@
     <xsl:apply-templates select="." />
   </xsl:template>
   
+  <xsl:template match="/p:declare-step/p:documentation" mode="get-body" priority="3" />
+  
   <xsl:template match="p:documentation" mode="get-body get-prolog" priority="2">
     <xsl:element name="{local-name()}">
       <xsl:attribute name="length" select="normalize-space(.) => string-length()" />
@@ -119,6 +121,10 @@
     <port name="{(@port,'anonymous')[1]}">
       <xsl:apply-templates select="@* except @port" mode="#current" />
     </port>
+  </xsl:template>
+  
+  <xsl:template match="p:with-option" mode="get-parameters" priority="2">
+    <parameter name="{@name}" value="{@select}" />
   </xsl:template>
   
   <xsl:template match="*" mode="get-parameters">
