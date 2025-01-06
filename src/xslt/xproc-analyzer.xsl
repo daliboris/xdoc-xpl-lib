@@ -43,12 +43,14 @@
   <xsl:template match="p:library">
     <library>
       <xsl:copy-of select="@type | @name" />
+      <xsl:call-template name="get-version" />
       <xsl:call-template name="get-prolog"/>
       <body>
         <xsl:apply-templates mode="get-body" />
       </body>
     </library>
   </xsl:template>
+  
   
   <xsl:template match="p:library/*" mode="get-body get-prolog">
     <xsl:apply-templates select="." />
@@ -84,6 +86,13 @@
         <xsl:apply-templates select="p:with-input" mode="get-parameters" />
       </xsl:if>
     </call>
+  </xsl:template>
+  
+  <xsl:template name="get-version">
+    <xsl:variable name="version" select="p:documentation[1]/xhtml:meta[@name='version']"/>
+    <xsl:if test="exists($version)">
+      <xsl:attribute name="semver" select="$version/@content" />
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="get-prolog">

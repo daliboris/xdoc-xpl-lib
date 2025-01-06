@@ -53,8 +53,13 @@
   </xsl:template>
   
   <xsl:template match="xpan:analysis">
+    <xsl:variable name="semver" select="xpan:library/@semver"/>
     <xsl:text>## </xsl:text>
     <xsl:value-of select="@file-name"/>
+    <xsl:if test="$semver">
+      <xsl:value-of select="' (version: ' || $semver || ')'"/>
+    </xsl:if>
+    
     <xsl:value-of select="$new-line"/>
     <xsl:apply-templates />
 

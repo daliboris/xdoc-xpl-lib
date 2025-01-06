@@ -80,9 +80,13 @@
   
   <xsl:template match="xpan:analysis">
 
+    <xsl:variable name="semver" select="xpan:library/@semver"/>
     <details class="file">
         <summary>
-          <strong><xsl:value-of select="@file-name"/></strong>          
+          <strong><xsl:value-of select="@file-name"/></strong> 
+          <xsl:if test="$semver">
+            <span class="semver"><xsl:value-of select="$semver"/></span>
+          </xsl:if>
         </summary>
         <xsl:apply-templates />
       </details>
@@ -385,7 +389,18 @@
       }
       .heading > fieldset {
       place-self: center stretch;
-      }</style>
+      }
+      .semver {
+      font-size: 90%;
+      color: brown;
+      }
+      .semver::before {
+      content: '(version: '
+      }
+      .semver::after {
+      content: ')'
+      }
+    </style>
   </xsl:template>
   
 </xsl:stylesheet>
