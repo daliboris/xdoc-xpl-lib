@@ -37,13 +37,14 @@
 		<p:option name="debug-path" select="()" as="xs:string?" />
 		<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 		
+		<p:option name="input-filter" select="'^.*\.xpl'" as="xs:string?" />
 		<p:option name="input-directory" select="'.'" as="xs:string" />
 		
 		<!-- VARIABLES -->
 		<p:variable name="input-directory-uri" select="resolve-uri($input-directory, $base-uri)" />
 
 	 <!-- PIPELINE STEPS -->
-		<p:directory-list path="{$input-directory-uri}" include-filter="^.*\.xpl" />
+		<p:directory-list path="{$input-directory-uri}" include-filter="{$input-filter}" />
 		
 		<p:for-each>
 			<p:with-input select="//c:file"/>
@@ -121,6 +122,7 @@
 		<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 		
 		<p:option name="input-directory" select="'.'" as="xs:string" />
+		<p:option name="input-filter" select="()" as="xs:string?" />
 		<p:option name="output-directory" select="'../report'" as="xs:string" />
 		<p:option name="output-file-stem" select="'README'" as="xs:string"  />
 		<p:option name="documentation-format" select="('markdown', 'html')" as="xs:string*" values="('html', 'markdown')" />
@@ -134,7 +136,7 @@
 		<p:variable name="output-slash" select="if(ends-with($output-directory-uri, '/')) then '' else '/'" />
 		
 		<!-- PIPELINE STEPS -->
-		<xpan:create-analysis input-directory="{$input-directory}" debug-path="{$debug-path}" base-uri="{$base-uri}" />
+		<xpan:create-analysis input-directory="{$input-directory}" input-filter="{$input-filter}" debug-path="{$debug-path}" base-uri="{$base-uri}" />
 		<p:store href="{$output-directory-uri}{$output-slash}{$output-file-stem}.xml" serialization="map{'indent' : true()}" message="Storing analysis to {$output-directory}/{$output-file-stem}.xml" name="analysis" />
 		
 		<p:for-each name="loop">
