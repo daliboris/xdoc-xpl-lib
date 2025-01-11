@@ -125,9 +125,10 @@
       <xsl:apply-templates select="xpan:step" />
       <xsl:if test="xpan:call">
         <table class="steps">
+          <colgroup><col /><col /><col /><col /><col /></colgroup>
           <thead>
             <tr>
-              <th>position</th>
+              <th>#</th>
               <th>step</th>
               <th>name</th>
               <th>parameter</th>
@@ -146,6 +147,8 @@
     <xsl:variable name="position" >
       <xsl:number from="xpan:body" level="multiple" />
     </xsl:variable>
+    <xsl:variable name="params" select="xpan:parameter" />
+    
     <tr class="call">
       <xsl:if test="xpan:parameter[@name = 'use-when'][@value='false()']">
         <xsl:attribute name="class" select="'call disabled'" />
@@ -153,25 +156,76 @@
       <td><xsl:value-of select="$position"/></td>
       <td class="step"><xsl:value-of select="@step"/></td> 
       <td><xsl:value-of select="@name"/></td>
-      <td colspan="2"></td>
+      
+      <xsl:choose>
+        <xsl:when test="xpan:parameter">
+          <xsl:apply-templates select="xpan:parameter[position() eq 1]">
+            <xsl:sort select="@name" />
+          </xsl:apply-templates>    
+        </xsl:when>
+        <xsl:otherwise>
+          <td></td>
+          <td></td>
+        </xsl:otherwise>
+      </xsl:choose>
     </tr>
-    <xsl:apply-templates select="xpan:parameter">
+    <xsl:apply-templates select="xpan:parameter[position() gt 1]">
       <xsl:sort select="@name" />
     </xsl:apply-templates>
-    <xsl:apply-templates select="xpan:* except xpan:parameter">
+    <xsl:apply-templates select="xpan:port">
+      <xsl:sort select="@name" />
+    </xsl:apply-templates>
+    <xsl:apply-templates select="xpan:* except (xpan:parameter, xpan:port)">
       <xsl:sort select="@name" />
     </xsl:apply-templates>
   </xsl:template>
   
-  <xsl:template match="xpan:parameter">
+  <xsl:template match="xpan:call/xpan:parameter[1] | xpan:call/xpan:port/xpan:parameter[1]" priority="2">
+    <xsl:call-template name="param-name-and-value"/>
+  </xsl:template>
+  
+  <xsl:template match="xpan:call/xpan:port">
+    <tr class="port">
+      <td></td>
+      <td>[port]</td>
+      <td><xsl:value-of select="@name"/></td>
+      <xsl:apply-templates select="xpan:parameter[position() eq 1]">
+        <xsl:sort select="@name" />
+      </xsl:apply-templates>
+    </tr>
+    <xsl:apply-templates select="xpan:parameter[position() gt 1]">
+      <xsl:sort select="@name" />
+    </xsl:apply-templates>
+  </xsl:template>
+  
+  <xsl:template match="xpan:parameter | xpan:port/xpan:parameter">
     <tr class="parameter">
       <xsl:if test="parent::xpan:call[xpan:parameter[@name = 'use-when'][@value='false()']]">
         <xsl:attribute name="class" select="'call disabled'" />
       </xsl:if>
-       <td colspan="3"></td>
-      <td><xsl:value-of select="@name"/>
-      </td><td><xsl:value-of select="@value"/></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <xsl:call-template name="param-name-and-value"/>
     </tr>
+  </xsl:template>
+  
+  <xsl:template name="param-name-and-value">
+    <td>
+      <xsl:value-of select="@name" />
+    </td>
+    <td>
+      <xsl:choose>
+        <xsl:when test="@path">
+          <a href="{@path}">
+            <xsl:value-of select="@value" />
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@value" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </td>
   </xsl:template>
   
   <xsl:template match="xpan:parameter" use-when="false()">
@@ -195,8 +249,10 @@
     <details class="ports">
       <summary><strong>Ports</strong> (<xsl:value-of select="count(*)"/>)</summary>
       <table>
+        <colgroup><col /><col /><col /><col /></colgroup>
         <thead>
           <tr>
+            <th>#</th>
             <th>direction</th>
             <th>value</th>
             <th>primary</th>
@@ -214,6 +270,7 @@
   
   <xsl:template match="xpan:input | xpan:output">
     <tr>
+      <td><xsl:number from="xpan:body" /></td>
       <td><xsl:value-of select="local-name()"/></td>
       <td>
         <xsl:choose>
@@ -233,8 +290,10 @@
     <details class="options">
       <summary><strong>Options</strong>  (<xsl:value-of select="count(*)"/>)</summary>
       <table>
+        <colgroup><col /><col /><col /></colgroup>
         <thead>
           <tr>
+            <th>#</th>
             <th>name</th>
             <th>properties</th>
           </tr>
@@ -248,6 +307,7 @@
   
   <xsl:template match="xpan:option">
     <tr>
+      <td><xsl:number from="xpan:body" /></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="(for $att in @* return concat(name($att), ' = ', $att)) => string-join(' | ')"/></td>
     </tr>
@@ -259,8 +319,10 @@
     <details class="namespaces">
       <summary><strong>Namespaces</strong>  (<xsl:value-of select="count(*)"/>)</summary>
       <table>
+        <colgroup><col /><col /><col /></colgroup>
         <thead>
           <tr>
+            <th>#</th>
             <th>prefix</th>
             <th>string</th>
           </tr>
@@ -274,6 +336,7 @@
   
   <xsl:template match="xpan:namespace">
     <tr>
+      <td><xsl:number from="xpan:body" /></td>
       <td><xsl:value-of select="@prefix"/></td>
       <td><xsl:value-of select="@value"/></td>
     </tr>
@@ -344,9 +407,17 @@
       border-bottom: 1px solid #aaa;
       margin-bottom: 0.5em;
       }
+      /* table */
       table {
       border-collapse: collapse;
       }
+      
+      /* table columns */
+      col:nth-of-type(even) { 
+      background: #F2F2F2; 
+      }
+      
+      /* table rows */
       tr.call {
       border-top: 1pt solid black;
       }
@@ -359,6 +430,15 @@
       tr.parameter {
       border-bottom: 1pt solid silver;
       }
+      tr:hover {
+      background-color: yellow;
+      }
+      
+      /* table cells */
+      th, td {
+      padding: .5em;
+      }
+      
       .container {
       display: grid;
       grid-template-columns: 3fr 1fr;
