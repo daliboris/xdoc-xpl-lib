@@ -139,8 +139,8 @@
   </xsl:template>
   
   <xsl:template match="xpan:call">
-    <xsl:variable name="position">
-      <xsl:number from="xpan:body" />
+    <xsl:variable name="position" >
+      <xsl:number from="xpan:body" level="multiple" />
     </xsl:variable>
     <tr class="call">
       <xsl:if test="xpan:parameter[@name = 'use-when'][@value='false()']">
@@ -151,7 +151,10 @@
       <td><xsl:value-of select="@name"/></td>
       <td colspan="2"></td>
     </tr>
-    <xsl:apply-templates>
+    <xsl:apply-templates select="xpan:parameter">
+      <xsl:sort select="@name" />
+    </xsl:apply-templates>
+    <xsl:apply-templates select="xpan:* except xpan:parameter">
       <xsl:sort select="@name" />
     </xsl:apply-templates>
   </xsl:template>
@@ -318,21 +321,6 @@
   
   <xsl:template name="insert-css">
     <style>
-      @media print {
-        details {
-        border: 1px solid white;
-        }
-        details[open] summary {
-        border-bottom: 1px solid white;
-        }
-        .container {
-        display: block;
-        width: 100%;
-        }
-        nav.overview {
-        display: none;
-        }
-      }
       details {
       border: 1px solid #aaa;
       border-radius: 4px;
@@ -385,7 +373,23 @@
       }
       .heading > fieldset {
       place-self: center stretch;
-      }</style>
+      }
+      @media print {
+        details {
+        border: 1px solid white;
+        }
+        details[open] summary {
+        border-bottom: 1px solid white;
+        }
+        .container {
+        display: grid;
+        grid-template-columns: 1fr;
+        }
+        nav.overview {
+        display: block;
+        }
+      }
+    </style>
   </xsl:template>
   
 </xsl:stylesheet>
