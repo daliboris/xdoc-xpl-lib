@@ -75,6 +75,9 @@
                      <option name="base-uri"
                              as="xs:anyURI"
                              select="static-base-uri()"/>
+                     <option name="input-filter"
+                             select="'^.*\.xpl'"
+                             as="xs:string?"/>
                      <option name="input-directory"
                              select="'.'"
                              as="xs:string"/>
@@ -104,13 +107,20 @@
                      <parameter name="path"
                                 value="{$input-directory-uri}"/>
                      <parameter name="include-filter"
-                                value="^.*\.xpl"/>
+                                value="{$input-filter}"/>
                   </call>
                   <call step="p:for-each">
                      <port name="anonymous">
                         <parameter name="select"
                                    value="//c:file"/>
                      </port>
+                     <call step="p:xslt">
+                        <port name="stylesheet">
+                           <parameter name="href"
+                                      value="../xslt/xproc-analyzer.xsl"
+                                      path="file:/V:/Projekty/Github/Daliboris/XProc/xdoc-xpl-lib/src/xslt/xproc-analyzer.xsl"/>
+                        </port>
+                     </call>
                   </call>
                   <call step="p:wrap-sequence">
                      <parameter name="wrapper"
@@ -179,7 +189,30 @@
                      </xhtml:section>
                   </documentation>
                   <call step="p:choose"
-                        length="2"/>
+                        length="2">
+                     <call step="p:when">
+                        <parameter name="test"
+                                   value="$format='html'"/>
+                        <call step="p:xslt">
+                           <port name="stylesheet">
+                              <parameter name="href"
+                                         value="../xslt/analysis-report-to-html.xsl"
+                                         path="file:/V:/Projekty/Github/Daliboris/XProc/xdoc-xpl-lib/src/xslt/analysis-report-to-html.xsl"/>
+                           </port>
+                        </call>
+                     </call>
+                     <call step="p:when">
+                        <parameter name="test"
+                                   value="$format = 'markdown'"/>
+                        <call step="p:xslt">
+                           <port name="stylesheet">
+                              <parameter name="href"
+                                         value="../xslt/analysis-report-to-md.xsl"
+                                         path="file:/V:/Projekty/Github/Daliboris/XProc/xdoc-xpl-lib/src/xslt/analysis-report-to-md.xsl"/>
+                           </port>
+                        </call>
+                     </call>
+                  </call>
                </body>
             </step>
             <step type="xpan:analyze">
@@ -218,6 +251,9 @@
                      <option name="input-directory"
                              select="'.'"
                              as="xs:string"/>
+                     <option name="input-filter"
+                             select="'^.*\.xpl'"
+                             as="xs:string?"/>
                      <option name="output-directory"
                              select="'../report'"
                              as="xs:string"/>
@@ -272,6 +308,8 @@
                   <call step="xpan:create-analysis">
                      <parameter name="input-directory"
                                 value="{$input-directory}"/>
+                     <parameter name="input-filter"
+                                value="{$input-filter}"/>
                      <parameter name="debug-path"
                                 value="{$debug-path}"/>
                      <parameter name="base-uri"

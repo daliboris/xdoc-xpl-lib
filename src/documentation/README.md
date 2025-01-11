@@ -34,12 +34,13 @@
 Analyzes XProc files in the directory and creates report in XML format.
 ##### Vytvoření analýzy
 Analyzuje soubory XProc ve složce a vytvoří souhrn ve formátu XML.
-#### Options (3)
+#### Options (4)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| input-filter | name = input-filter \| select = '^.*\.xpl' \| as = xs:string? |
 | input-directory | name = input-directory \| select = '.' \| as = xs:string |
 
 #### Ports (1)
@@ -63,9 +64,11 @@
 | 1 | p:variable | input-directory-uri |   |   | 
 |   |   |   | select | resolve-uri($input-directory, $base-uri) | 
 | 2 | p:directory-list |  |   |   | 
-|   |   |   | include-filter | ^.*\.xpl | 
+|   |   |   | include-filter | {$input-filter} | 
 |   |   |   | path | {$input-directory-uri} | 
 | 3 | p:for-each |  |   |   | 
+| 1 | p:xslt |  |   |   | 
+|   |   |   | href | ../xslt/xproc-analyzer.xsl | 
 |   |   |   | select | //c:file | 
 | 4 | p:wrap-sequence |  |   |   | 
 |   |   |   | wrapper | xpan:report | 
@@ -108,6 +111,14 @@
 | position | step | name | parameter | value | 
 | --- | --- | --- | --- | --- | 
 | 1 | p:choose |  |   |   | 
+| 1 | p:when |  |   |   | 
+| 1 | p:xslt |  |   |   | 
+|   |   |   | href | ../xslt/analysis-report-to-html.xsl | 
+|   |   |   | test | $format='html' | 
+| 2 | p:when |  |   |   | 
+| 1 | p:xslt |  |   |   | 
+|   |   |   | href | ../xslt/analysis-report-to-md.xsl | 
+|   |   |   | test | $format = 'markdown' | 
 
 
 #### **xpan:analyze**
@@ -117,13 +128,14 @@
 Analyzes XProc files in the libraries and pipeplines and saves report files.
 ##### Analýza
 Analyzuje soubory XProc v knihovnách a kanálech a uloží výsledné soubory.
-#### Options (6)
+#### Options (7)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
 | input-directory | name = input-directory \| select = '.' \| as = xs:string |
+| input-filter | name = input-filter \| select = '^.*\.xpl' \| as = xs:string? |
 | output-directory | name = output-directory \| select = '../report' \| as = xs:string |
 | output-file-stem | name = output-file-stem \| select = 'README' \| as = xs:string |
 | documentation-format | name = documentation-format \| select = ('markdown', 'html') \| as = xs:string* \| values = ('html', 'markdown') |
@@ -160,6 +172,7 @@
 |   |   |   | base-uri | {$base-uri} | 
 |   |   |   | debug-path | {$debug-path} | 
 |   |   |   | input-directory | {$input-directory} | 
+|   |   |   | input-filter | {$input-filter} | 
 | 7 | p:store | analysis |   |   | 
 |   |   |   | href | {$output-directory-uri}{$output-slash}{$output-file-stem}.xml | 
 |   |   |   | serialization | map{'indent' : true()} | 
