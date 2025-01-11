@@ -10,7 +10,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml" 
   xmlns="https://www.daliboris.cz/ns/xproc/analysis"
   exclude-result-prefixes="xs math xd p c xpan"
-  version="2.0">
+  version="3.0">
   <xd:doc scope="stylesheet">
     <xd:desc>
       <xd:p><xd:b>Created on:</xd:b> May 4, 2024</xd:p>
@@ -91,12 +91,20 @@
       <xsl:if test="self::p:for-each">
         <xsl:apply-templates select="p:with-input" mode="get-parameters" />
       </xsl:if>
+      <xsl:apply-templates select="* except p:with-input" mode="get-body" />
+    </call>
+  </xsl:template>
+  
+  <xsl:template match="p:when | p:otherwise" mode="get-body" priority="2">
+    <call step="{name()}">
+      <xsl:apply-templates select="@*" mode="get-parameters" />
+      <xsl:apply-templates mode="#current" />
     </call>
   </xsl:template>
   
   <xsl:template  match="p:xslt | p:xquery" mode="get-body" priority="2">
     <call step="{name()}">
-      <xsl:apply-templates select="p:with-input" mode="get-parameters" />
+      <xsl:apply-templates select="p:with-input | p:with-option" mode="get-parameters" />
     </call>
   </xsl:template>
   
@@ -130,6 +138,10 @@
   
   <xsl:template match="@*" mode="get-parameters">
     <parameter name="{name()}" value="{.}" />
+  </xsl:template>
+  
+  <xsl:template match="@href[not(contains(., '$'))]" mode="get-parameters" priority="2">
+    <parameter name="{name()}" value="{.}" path="{resolve-uri(., base-uri())}" />
   </xsl:template>
   
   <xsl:template match="p:with-input" mode="get-parameters" priority="2">
