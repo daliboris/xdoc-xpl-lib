@@ -122,7 +122,7 @@
 		<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 		
 		<p:option name="input-directory" select="'.'" as="xs:string" />
-		<p:option name="input-filter" select="()" as="xs:string?" />
+		<p:option name="input-filter" select="'^.*\.xpl'" as="xs:string?" />
 		<p:option name="output-directory" select="'../report'" as="xs:string" />
 		<p:option name="output-file-stem" select="'README'" as="xs:string"  />
 		<p:option name="documentation-format" select="('markdown', 'html')" as="xs:string*" values="('html', 'markdown')" />
