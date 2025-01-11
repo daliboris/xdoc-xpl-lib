@@ -46,7 +46,7 @@
                 <input type="checkbox" id="expand-steps" name="steps"  />
                   <label for="expand-steps">Steps</label>
                 <input type="checkbox" id="expand-all" name="all"  />
-                <label for="expand-steps">All</label>
+                <label for="expand-all">All</label>
               </fieldset>
             </div>
           <xsl:apply-templates select="//xpan:analysis" />  
