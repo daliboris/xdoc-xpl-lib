@@ -71,7 +71,15 @@
     <call step="{name()}">
       <xsl:copy-of select="@name" />
       <xsl:apply-templates select="@* except (@name, @message, @p:message)" mode="get-parameters" />
-      <xsl:apply-templates select="*" mode="get-parameters" />
+      <xsl:choose>
+        <xsl:when test="self::p:if | self::p:choose">
+          <xsl:apply-templates select="*" mode="get-body" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="p:with-input" mode="get-parameters" />
+          <xsl:apply-templates select="*" mode="get-body" />    
+        </xsl:otherwise>
+      </xsl:choose>
     </call>
   </xsl:template>
   
@@ -85,6 +93,13 @@
       </xsl:if>
     </call>
   </xsl:template>
+  
+  <xsl:template  match="p:xslt | p:xquery" mode="get-body" priority="2">
+    <call step="{name()}">
+      <xsl:apply-templates select="p:with-input" mode="get-parameters" />
+    </call>
+  </xsl:template>
+  
   
   <xsl:template name="get-prolog">
     <prolog>
